@@ -49,3 +49,38 @@ function buildModal(
 ): { text: string; status: ModalStatus } {
 	return { text, status };
 }
+
+type User = {
+	name: string;
+	age: number;
+};
+function getOlderUser(user1: User, user2: User): User | null {
+	return user1.age === user2.age ? null : user1.age > user2.age ? user1 : user2;
+}
+function getParams(query: string) {
+	const parts = query.split('&');
+	const init: any = {};
+	return parts.reduce((acc, part) => {
+		const [key, value] = part.split('=');
+		acc[key] = value;
+		return acc;
+	}, init);
+}
+
+namespace Company {
+	export function isEmployeeEmail(email: string, domain: string): boolean {
+		return email.endsWith(`@${domain}`);
+	}
+}
+
+type User1 = {
+	email: string;
+};
+
+function authorize(user: User1 | null): boolean {
+	const companyDomain = 'hexlet.io';
+
+	const email = user?.email ?? '';
+
+	return Company.isEmployeeEmail(email, companyDomain);
+}
